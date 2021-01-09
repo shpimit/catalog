@@ -1,0 +1,19 @@
+POST http://localhost:8083/products
+Content-Type: application/json
+
+{
+    "id": "4",
+    "itemNO": "GD2020004",
+    "image": "xxxx",
+    "descriptionLoc": "안전화",
+    "materialClass": "공구",
+    "specification": "260",
+    "basicUnit": "EA",
+    "makerName": "아디다스",
+    "modelNO": "에어조단",
+    "originCountry": "東京",
+    "hsNO": "260360980",
+    "addUserID": "2279894"
+}
+
+###

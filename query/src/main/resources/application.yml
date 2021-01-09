@@ -1,0 +1,60 @@
+server:
+  port: 8081
+
+spring:
+  application:
+    name: query   # Eureka Client가 Eureka Server에 자신을 등록할때 이 이름으로 등록됨
+#  data:
+#    mongodb:
+#      uri: mongodb://127.0.0.1:27017
+#      database: MyDatabase
+  h2:
+    console:
+      enabled : true
+      path : /h2
+  datasource:
+    url: jdbc:h2:tcp://localhost/~/test
+    driver-class-name: org.h2.Driver
+    username: sa
+  jpa:
+    database-platform: org.hibernate.dialect.H2Dialect
+    properties.hibernate.hbm2ddl.auto: create
+    showSql: true
+    properties:
+      hibernate:
+        format_sql=true:
+
+
+hystrix:
+  command:
+    getItem:    # command key. use 'default' for global setting.
+      execution:
+        isolation:
+          thread:
+            timeoutInMilliseconds: 3000
+      circuitBreaker:
+        requestVolumeThreshold: 1   # Minimum number of request to calculate circuit breaker's health. default 20
+        errorThresholdPercentage: 50 # Error percentage to open circuit. default 50\
+    FeignProductRemoteService#getItem(String):  # Feign 사용시 hystrix 셋팅 하는 법
+      execution:
+        isolation:
+          thread:
+            timeoutInMilliseconds: 3000   # default 1,000ms
+      circuitBreaker:
+        requestVolumeThreshold: 1   # Minimum number of request to calculate circuit breaker's health. default 20
+        errorThresholdPercentage: 50 # Error percentage to open circuit. default 50
+
+catalog:
+  ribbon:
+#    listOfServers: localhost:8082, localhost:7777
+    MaxAutoRetries: 0
+    MaxAutoRetriesNextServer: 1
+
+eureka:
+  instance:
+    prefer-ip-address: true   # 로컬에서 ip로 테스트 하기 위해
+  client:
+    service-url:
+      defaultZone: http://127.0.0.1:8761/eureka  # default address
+
+logging.level.com.prugio.query : debug

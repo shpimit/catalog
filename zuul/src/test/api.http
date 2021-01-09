@@ -1,0 +1,22 @@
+GET http://localhost:8765/query
+Content-Type: application/json
+
+{
+  "item_no" : "GD1"
+//,
+//  "tel" : "02-1234-5678",
+//  "address" : "OO시 OO구"
+}
+
+###
+GET http://localhost:8765/command/itemSummaries
+Content-Type: application/json
+
+{
+  "item_no" : "GD1"
+  //,
+  //  "tel" : "02-1234-5678",
+  //  "address" : "OO시 OO구"
+}
+
+###

@@ -1,0 +1,6 @@
+rootProject.name = 'catalog'
+include 'command'
+include 'query'
+include 'eureka'
+include 'common'
+include 'zuul'

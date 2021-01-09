@@ -1,0 +1,4 @@
+GET http://localhost:8081/query/items
+Content-Type: application/json
+
+###

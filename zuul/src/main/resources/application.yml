@@ -1,0 +1,67 @@
+spring:
+  application:
+    name: zuul
+
+server:
+  port: 8765
+
+zuul:
+  routes:
+    command:
+      path: /items/**
+      serviceId: command
+      stripPrefix: false
+    query:
+      path: /query/**
+      serviceId: query
+      stripPrefix: false
+  ribbon-isolation-strategy: thread
+  thread-pool:
+    use-separate-thread-pools: true
+    thread-pool-key-prefix: zuul-
+
+eureka:
+  instance:
+    non-secure-port: ${server.port}
+    prefer-ip-address: true
+  client:
+    serviceUrl:
+      defaultZone: http://localhost:8761/eureka/
+
+hystrix:
+  command:
+    default:
+      execution:
+        isolation:
+          thread:
+            timeoutInMilliseconds: 1000
+    command:                                 # product 대신해서 command로 적음
+      execution:
+        isolation:
+          thread:
+            timeoutInMilliseconds: 10000
+  threadpool:
+    zuul-command:                            # command 쓰레드 pool
+      coreSize: 30
+      maximumSize: 100
+      allowMaximumSizeToDivergeFromCoreSize: true
+    zuul-query:                              #  command 쓰레드 poolquery 쓰레드 pool
+      coreSize: 30
+      maximumSize: 100
+      allowMaximumSizeToDivergeFromCoreSize: true
+
+command:                                     # Ribbon command 타임아웃 셋팅
+  ribbon:
+    MaxAutoRetriesNextServer: 1
+    ReadTimeout: 3000
+    ConnectTimeout: 1000
+    MaxTotalConnections: 300
+    MaxConnectionsPerHost: 100
+
+query:                                       # Ribbon query 타임아웃 셋팅
+  ribbon:
+    MaxAutoRetriesNextServer: 1
+    ReadTimeout: 3000
+    ConnectTimeout: 1000
+    MaxTotalConnections: 300
+    MaxConnectionsPerHost: 100
